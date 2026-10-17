@@ -1,0 +1,10 @@
+/node_modules
+/dist
+/out-tsc
+/.angular
+/coverage
+/.vscode
+*.log
+.env*
+!.env.example
+/artifacts

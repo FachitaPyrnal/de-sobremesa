@@ -1,0 +1,79 @@
+<section class="hero container">
+  <div class="hero-copy">
+    <p class="eyebrow">
+      <span class="small-line"></span> UN RECETARIO PARA CURIOSOS
+    </p>
+    <h1>Algo rico.<br />Una mesa.<br /><em>Buena compañía.</em></h1>
+    <p class="hero-description">
+      No hace falta una ocasión especial para comer bien. Encontrá una receta,
+      poné la mesa y quedate un rato más.
+    </p>
+    <a class="button" routerLink="/recetas"
+      >Explorar el recetario <span aria-hidden="true">↗</span></a
+    >
+    <div class="hero-footnote">
+      <span aria-hidden="true">✳</span> Recetas del mundo, para tu cocina.
+    </div>
+  </div>
+  <div class="hero-art">
+    <div class="hero-photo">
+      <img
+        src="https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg"
+        alt="Pasta con salsa de tomate servida en un plato, lista para compartir"
+        width="700"
+        height="800"
+        fetchpriority="high"
+      />
+    </div>
+    <div class="round-stamp">
+      HECHO EN CASA<br /><span aria-hidden="true">✳</span><br />SABE MEJOR
+    </div>
+    <div class="photo-note">
+      <span>En el menú de hoy</span
+      ><a routerLink="/recetas/52771"
+        >Spicy Arrabiata Penne <span aria-hidden="true">↗</span></a
+      >
+    </div>
+  </div>
+</section>
+<div class="manifesto-strip">
+  <div class="container">
+    <span>Ingredientes simples</span><i aria-hidden="true">✳</i
+    ><span>Sabores de otros lugares</span><i aria-hidden="true">✳</i
+    ><span>Ganas de probar</span>
+  </div>
+</div>
+<section class="section container">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">LA PRÓXIMA COMIDA EMPIEZA ACÁ</p>
+      <h2>Para abrir el apetito.</h2>
+    </div>
+    <a class="text-link" routerLink="/recetas"
+      >Ver todas las recetas <span aria-hidden="true">↗</span></a
+    >
+  </div>
+  @if (featured().length) {
+    <div class="recipe-grid">
+      @for (recipe of featured(); track recipe.id) {
+        <app-recipe-card [recipe]="recipe" />
+      }
+    </div>
+  } @else {
+    <div class="home-invitation">
+      <p>¿Pasta, algo dulce o un plato que todavía no conocés?</p>
+      <a class="text-link" routerLink="/recetas">Elegí tu próxima receta ↗</a>
+    </div>
+  }
+</section>
+<section class="container about-banner">
+  <span class="banner-doodle" aria-hidden="true">✳</span>
+  <div>
+    <p class="eyebrow">SIN VUELTAS, SIN PRETENSIONES</p>
+    <h2>La cocina se aprende<br />con las manos en la masa.</h2>
+    <p>Un espacio para probar, equivocarse un poco y volver a cocinar.</p>
+  </div>
+  <a class="button button-outline" routerLink="/guia"
+    >Antes de prender el fuego ↗</a
+  >
+</section>

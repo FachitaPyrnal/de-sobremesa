@@ -1,0 +1,112 @@
+<section class="container page-intro">
+  <p class="eyebrow">PARA TODOS LOS DÍAS Y ALGUNO ESPECIAL</p>
+  <h1>El recetario<span class="accent">.</span></h1>
+  <p>Buscá algo que te guste. O probá algo que nunca cocinaste.</p>
+</section>
+<section class="container catalog" aria-label="Explorar recetas">
+  <div class="search-panel">
+    <form class="search-form" (ngSubmit)="search()">
+      <label for="search">¿Qué tenés ganas de cocinar?</label>
+      <div class="search-input">
+        <span aria-hidden="true">⌕</span
+        ><input
+          id="search"
+          name="search"
+          type="search"
+          [(ngModel)]="query"
+          placeholder="Probá con pasta, chicken, cake…"
+        /><button class="button" type="submit">
+          Buscar <span aria-hidden="true">↗</span>
+        </button>
+      </div>
+      <p>
+        La fuente está en inglés: buscá palabras del nombre original. Ej.: beef,
+        rice, chocolate.
+      </p>
+    </form>
+    <div class="search-aside">
+      <span aria-hidden="true">✳</span>
+      <p>Tu próxima receta<br />favorita está por acá.</p>
+    </div>
+  </div>
+  @if (loading()) {
+    <app-status
+      title="Buscando algo rico…"
+      message="Estamos trayendo las recetas de TheMealDB."
+      [loading]="true"
+    />
+  } @else if (error()) {
+    <app-status
+      title="El recetario no llegó a la mesa."
+      message="No pudimos conectar con TheMealDB. Revisá tu conexión y probá de nuevo."
+      [error]="true"
+      (retry)="retry()"
+    />
+  } @else {
+    <div class="filters">
+      <div class="filter-control">
+        <label for="category">Categoría</label
+        ><select
+          id="category"
+          [ngModel]="category()"
+          (ngModelChange)="category.set($event)"
+        >
+          <option value="Todas">Todas las categorías</option>
+          @for (item of categories(); track item) {
+            <option [value]="item">{{ item }}</option>
+          }
+        </select>
+      </div>
+      <div class="filter-control">
+        <label for="sort">Ordenar por</label
+        ><select
+          id="sort"
+          [ngModel]="sort()"
+          (ngModelChange)="sort.set($event)"
+        >
+          <option value="original">Orden del recetario</option>
+          <option value="nombre">Nombre: A–Z</option>
+        </select>
+      </div>
+      <button
+        class="saved-filter"
+        [class.selected]="savedOnly()"
+        [attr.aria-pressed]="savedOnly()"
+        (click)="savedOnly.set(!savedOnly())"
+      >
+        ♡ Mis favoritas
+      </button>
+    </div>
+    <div class="results-line" aria-live="polite">
+      <span
+        >{{ filtered().length }} recetas
+        {{
+          savedOnly() ? "favoritas en esta búsqueda" : "para descubrir"
+        }}</span
+      ><button class="plain-button" (click)="clear()">
+        Limpiar búsqueda y filtros ↻
+      </button>
+    </div>
+    @if (filtered().length) {
+      <div class="recipe-grid">
+        @for (recipe of filtered(); track recipe.id) {
+          <app-recipe-card [recipe]="recipe" />
+        }
+      </div>
+    } @else {
+      <app-status
+        title="Todavía no hay nada en este plato."
+        [message]="
+          savedOnly()
+            ? 'Guardá recetas con el corazón. Los favoritos se muestran dentro de la búsqueda y categoría actuales.'
+            : 'Probá otro nombre en inglés o cambiá la categoría.'
+        "
+      />
+    }
+    <p class="catalog-note">
+      Una selección de la API, no el catálogo completo. Buscá por nombre para
+      descubrir más recetas.<br />Las recetas e ingredientes conservan el idioma
+      original de TheMealDB.
+    </p>
+  }
+</section>
